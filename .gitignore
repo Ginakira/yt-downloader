@@ -1,0 +1,7 @@
+.venv/
+build/
+dist/
+yt-dlp
+ffmpeg
+*.spec
+.DS_Store
