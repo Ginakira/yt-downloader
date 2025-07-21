@@ -17,34 +17,20 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11" # 使用稳定版本
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
 
-      - name: Download yt-dlp
+      - name: Download binaries
         run: |
-          curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos -o yt-dlp
-          chmod +x yt-dlp
-
-      - name: Download ffmpeg
-        run: |
-          curl -L https://evermeet.cx/ffmpeg/ffmpeg-6.1.zip -o ffmpeg.zip
-          unzip ffmpeg.zip
-          chmod +x ffmpeg
-          rm ffmpeg.zip
-
-      - name: Verify downloads
-        run: |
-          echo "yt-dlp info:"
-          file yt-dlp
-          echo "ffmpeg info:"
-          file ffmpeg
+          bash setup.sh
 
       - name: Build application
         run: |
+          export PYINSTALLER_LIPO_SKIP=1
           python build.py
 
       - name: Create release info
@@ -54,7 +40,8 @@ jobs:
           echo "Python版本: $(python --version)" >> build-info.txt
           echo "系统信息: $(uname -a)" >> build-info.txt
           echo "架构信息:" >> build-info.txt
-          file dist/YouTube下载器 >> build-info.txt
+          file dist/yt-downloader.app/Contents/MacOS/yt-downloader >> build-info.txt
+          ls -lh dist/yt-downloader.app/Contents/MacOS/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

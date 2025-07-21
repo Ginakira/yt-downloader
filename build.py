@@ -24,6 +24,7 @@ build_args = [
     '--add-binary=ffmpeg:.',
     '--name=yt-downloader',
     '--clean',
+    '--noupx',
     # 添加通用二进制支持
     # '--target-architecture=universal2',
     # 兼容性设置
